@@ -7,6 +7,6 @@ export class RemoteAuthenticationUseCase {
   ) {}
 
   async auth(): Promise<void> {
-    this.httpPostClientSpy.post(this.url);
+    this.httpPostClientSpy.post({ url: this.url });
   }
 }
