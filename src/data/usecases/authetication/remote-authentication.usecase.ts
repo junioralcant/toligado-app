@@ -1,12 +1,13 @@
+import { IAuthentication } from '../../../domain/usecases/authentication';
 import { IHttpPostClient } from '../../repositories/http/http-post-client';
 
 export class RemoteAuthenticationUseCase {
   constructor(
     private readonly url: string,
-    private readonly httpPostClientSpy: IHttpPostClient
+    private readonly httpPostClient: IHttpPostClient
   ) {}
 
-  async auth(): Promise<void> {
-    this.httpPostClientSpy.post({ url: this.url });
+  async auth({ cpf }: IAuthentication.Params): Promise<void> {
+    this.httpPostClient.post({ url: this.url, body: { cpf } });
   }
 }
