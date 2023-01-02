@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>To ligado teste</Text>
+      <Text testID="title">To Ligado</Text>
     </View>
   );
 }
