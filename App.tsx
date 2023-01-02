@@ -1,11 +1,9 @@
-import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>To ligado</Text>
-      <StatusBar style="auto" />
+      <Text>To ligado teste</Text>
     </View>
   );
 }
