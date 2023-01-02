@@ -10,7 +10,6 @@
     "test": "jest",
     "test:watch": "yarn test -- --watch",
     "test:ci": "yarn test -- --coverage"
-
   },
   "dependencies": {
     "expo": "~47.0.9",
