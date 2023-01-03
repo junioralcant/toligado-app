@@ -23,6 +23,8 @@ export class RemoteAuthenticationUseCase {
         throw new UnexpectedError();
       case HttpStatusCode.serverError:
         throw new UnexpectedError();
+      case HttpStatusCode.notFound:
+        throw new UnexpectedError();
     }
   }
 }
