@@ -6,6 +6,12 @@ import { AxiosHttpClient } from './axios-http-client';
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
+const mockedAxiosResponse = {
+  data: faker.datatype.json(),
+  status: faker.datatype.number(),
+};
+
+mockedAxios.post.mockResolvedValue(mockedAxiosResponse);
 type SutTypes = {
   sut: AxiosHttpClient;
 };
@@ -30,5 +36,17 @@ describe('AxiosHttpClient', () => {
     const { sut } = makeSut();
     await sut.post(request);
     expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body);
+  });
+
+  it('Shoul retun correct resonse on axios.post', async () => {
+    const request = mockPostParams();
+    const { sut } = makeSut();
+    const response = await sut.post(request);
+    const axiosResponse = await mockedAxios.post.mock.results[0].value;
+
+    expect(response).toEqual({
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data,
+    });
   });
 });
