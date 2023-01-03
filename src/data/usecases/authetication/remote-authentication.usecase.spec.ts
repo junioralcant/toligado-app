@@ -1,10 +1,14 @@
 import { faker } from '@faker-js/faker';
 import { HttpPostClientSpy } from '@data/mocks/mock-http-post';
-import { mockAuthenticationParams } from '@domain/mocks/mock-authentication';
+import {
+  mockAccounModel,
+  mockAuthenticationParams,
+} from '@domain/mocks/mock-authentication';
 import { RemoteAuthenticationUseCase } from './remote-authentication.usecase';
 import { HttpStatusCode } from '@data/repositories/http/http-response';
 import { InvalidCredentialsError } from '@domain/errors/invalid-credentials-error';
 import { UnexpectedError } from '@domain/errors/unexpected-error';
+import { IAuthentication } from '@domain/usecases/authentication';
 
 type SutTypes = {
   httpPostClientSpy: HttpPostClientSpy;
@@ -69,5 +73,17 @@ describe('RemoteAuthenticationUseCase', () => {
     };
     const promise = sut.auth(mockAuthenticationParams());
     await expect(promise).rejects.toThrow(new UnexpectedError());
+  });
+
+  it('Should return an Authentication.Model if HttpPostClient returns 200', async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    const httpResul = mockAccounModel();
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body: httpResul,
+    };
+
+    const response = await sut.auth(mockAuthenticationParams());
+    expect(response).toEqual(httpResul);
   });
 });
