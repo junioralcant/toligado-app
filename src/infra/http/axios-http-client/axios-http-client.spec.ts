@@ -1,5 +1,5 @@
-import { HttpPostParams } from '@data/repositories/http';
 import { faker } from '@faker-js/faker';
+import { HttpPostParams } from '@data/repositories/http';
 import axios from 'axios';
 import { AxiosHttpClient } from './axios-http-client';
 
@@ -12,6 +12,7 @@ const mockedAxiosResponse = {
 };
 
 mockedAxios.post.mockResolvedValue(mockedAxiosResponse);
+
 type SutTypes = {
   sut: AxiosHttpClient;
 };
