@@ -1,5 +1,5 @@
+import { IAuthentication } from '@domain/usecases';
 import { faker } from '@faker-js/faker';
-import { IAuthentication } from '@domain/usecases/authentication';
 
 export function mockAuthenticationParams(): IAuthentication.Params {
   return {

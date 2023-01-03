@@ -1,8 +1,6 @@
-import { IHttpPostClient } from '@data/repositories/http/http-post-client';
-import { HttpStatusCode } from '@data/repositories/http/http-response';
-import { InvalidCredentialsError } from '@domain/errors/invalid-credentials-error';
-import { UnexpectedError } from '@domain/errors/unexpected-error';
-import { IAuthentication } from '@domain/usecases/authentication';
+import { HttpStatusCode, IHttpPostClient } from '@data/repositories/http';
+import { InvalidCredentialsError, UnexpectedError } from '@domain/errors';
+import { IAuthentication } from '@domain/usecases';
 
 export class RemoteAuthenticationUseCase {
   constructor(

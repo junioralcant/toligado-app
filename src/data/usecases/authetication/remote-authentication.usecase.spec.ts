@@ -1,14 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { HttpPostClientSpy } from '@data/mocks/mock-http-post';
-import {
-  mockAccounModel,
-  mockAuthenticationParams,
-} from '@domain/mocks/mock-authentication';
 import { RemoteAuthenticationUseCase } from './remote-authentication.usecase';
 import { HttpStatusCode } from '@data/repositories/http/http-response';
-import { InvalidCredentialsError } from '@domain/errors/invalid-credentials-error';
-import { UnexpectedError } from '@domain/errors/unexpected-error';
-import { IAuthentication } from '@domain/usecases/authentication';
+import { InvalidCredentialsError, UnexpectedError } from '@domain/errors';
+import { mockAccounModel, mockAuthenticationParams } from '@domain/mocks';
+import { HttpPostClientSpy } from '@data/mocks';
 
 type SutTypes = {
   httpPostClientSpy: HttpPostClientSpy;
