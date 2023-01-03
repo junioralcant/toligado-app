@@ -7,24 +7,28 @@ import { IAuthentication } from '@domain/usecases/authentication';
 export class RemoteAuthenticationUseCase {
   constructor(
     private readonly url: string,
-    private readonly httpPostClient: IHttpPostClient
+    private readonly httpPostClient: IHttpPostClient<RemoteAuthenticationUseCase.Model>
   ) {}
 
-  async auth({ cpf }: IAuthentication.Params): Promise<void> {
+  async auth({
+    cpf,
+  }: IAuthentication.Params): Promise<IAuthentication.Model | undefined> {
     const response = await this.httpPostClient.post({
       url: this.url,
       body: { cpf },
     });
 
     switch (response.statusCode) {
+      case HttpStatusCode.ok:
+        return response.body;
       case HttpStatusCode.unauthorized:
         throw new InvalidCredentialsError();
-      case HttpStatusCode.badRequest:
-        throw new UnexpectedError();
-      case HttpStatusCode.serverError:
-        throw new UnexpectedError();
-      case HttpStatusCode.notFound:
+      default:
         throw new UnexpectedError();
     }
   }
+}
+
+export namespace RemoteAuthenticationUseCase {
+  export type Model = IAuthentication.Model;
 }

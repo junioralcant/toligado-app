@@ -5,6 +5,6 @@ export type HttpPostParams = {
   body?: object;
 };
 
-export interface IHttpPostClient {
-  post(params: HttpPostParams): Promise<HttpResponse>;
+export interface IHttpPostClient<R = any> {
+  post(params: HttpPostParams): Promise<HttpResponse<R>>;
 }
