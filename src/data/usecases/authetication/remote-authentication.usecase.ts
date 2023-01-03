@@ -1,5 +1,5 @@
-import { IAuthentication } from '../../../domain/usecases/authentication';
-import { IHttpPostClient } from '../../repositories/http/http-post-client';
+import { IHttpPostClient } from '@data/repositories/http/http-post-client';
+import { IAuthentication } from '@domain/usecases/authentication';
 
 export class RemoteAuthenticationUseCase {
   constructor(

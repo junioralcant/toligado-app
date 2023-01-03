@@ -1,4 +1,5 @@
-import { IAuthentication } from '../usecases/authentication';
+import { IAuthentication } from '@domain/usecases/authentication';
+
 export function mockAuthenticationParams(): IAuthentication.Params {
   return {
     cpf: '788.755.890-54',

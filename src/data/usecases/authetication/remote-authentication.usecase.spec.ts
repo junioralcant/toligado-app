@@ -1,7 +1,7 @@
-import { HttpPostClientSpy } from '../../mocks/mock-http-post';
-import { RemoteAuthenticationUseCase } from './remote-authentication.usecase';
 import { faker } from '@faker-js/faker';
-import { mockAuthenticationParams } from '../../../domain/mocks/mock-authentication';
+import { HttpPostClientSpy } from '@data/mocks/mock-http-post';
+import { mockAuthenticationParams } from '@domain/mocks/mock-authentication';
+import { RemoteAuthenticationUseCase } from './remote-authentication.usecase';
 
 type SutTypes = {
   httpPostClientSpy: HttpPostClientSpy;
