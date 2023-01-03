@@ -1,6 +1,7 @@
 import { IHttpPostClient } from '@data/repositories/http/http-post-client';
 import { HttpStatusCode } from '@data/repositories/http/http-response';
 import { InvalidCredentialsError } from '@domain/errors/invalid-credentials-error';
+import { UnexpectedError } from '@domain/errors/unexpected-error';
 import { IAuthentication } from '@domain/usecases/authentication';
 
 export class RemoteAuthenticationUseCase {
@@ -18,6 +19,8 @@ export class RemoteAuthenticationUseCase {
     switch (response.statusCode) {
       case HttpStatusCode.unauthorized:
         throw new InvalidCredentialsError();
+      case HttpStatusCode.badRequest:
+        throw new UnexpectedError();
     }
   }
 }
