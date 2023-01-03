@@ -2,7 +2,7 @@ import { HttpStatusCode, IHttpPostClient } from '@data/repositories/http';
 import { InvalidCredentialsError, UnexpectedError } from '@domain/errors';
 import { IAuthentication } from '@domain/usecases';
 
-export class RemoteAuthenticationUseCase {
+export class RemoteAuthenticationUseCase implements IAuthentication {
   constructor(
     private readonly url: string,
     private readonly httpPostClient: IHttpPostClient<RemoteAuthenticationUseCase.Model>

@@ -1,5 +1,7 @@
 export interface IAuthentication {
-  auth(params: IAuthentication.Params): Promise<IAuthentication.Model>;
+  auth(
+    params: IAuthentication.Params
+  ): Promise<IAuthentication.Model | undefined>;
 }
 
 export namespace IAuthentication {
