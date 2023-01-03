@@ -21,6 +21,8 @@ export class RemoteAuthenticationUseCase {
         throw new InvalidCredentialsError();
       case HttpStatusCode.badRequest:
         throw new UnexpectedError();
+      case HttpStatusCode.serverError:
+        throw new UnexpectedError();
     }
   }
 }
