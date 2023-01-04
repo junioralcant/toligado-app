@@ -34,7 +34,7 @@ export function Login() {
       <Form>
         <Input
           isFocused={isFocused}
-          label="Informe seu CPF"
+          label="CPF"
           placeholder="Informe seu CPF"
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
