@@ -19,7 +19,6 @@ export const Content = styled.View`
 `;
 
 export const BoxGirl = styled.View`
-  width: 100%;
   align-items: center;
   justify-content: center;
 `;
@@ -42,7 +41,6 @@ export const Label = styled.Text`
 `;
 
 export const InputText = styled.TextInput<ProsInputText>`
-  width: 100%;
   height: 55px;
   border-radius: 10px;
   padding-left: 15px;
@@ -66,7 +64,7 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.background_primary};
-  width: 100%;
+
   height: 55px;
   border-radius: 10px;
 `;
@@ -77,7 +75,6 @@ export const TextButton = styled.Text`
 `;
 
 export const BoxLogo = styled.View`
-  width: 100%;
   align-items: center;
   justify-content: center;
   margin-top: 15px;
