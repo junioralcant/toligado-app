@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
 
 import girl from '@presentation/assets/images/girl.png';
 import logo from '@presentation/assets/images/logorocha.png';
@@ -10,14 +9,12 @@ import {
   Button,
   Container,
   Form,
-  Input,
-  InputText,
-  Label,
   Girl,
   TextButton,
   BoxLogo,
   Logo,
 } from './styles';
+import { Input } from '@presentation/components/Input';
 
 export function Login() {
   const [isFocused, setIsFocused] = useState(false);
@@ -37,17 +34,13 @@ export function Login() {
       </BoxGirl>
 
       <Form>
-        <KeyboardAvoidingView behavior="padding">
-          <Input>
-            <Label>CPF</Label>
-            <InputText
-              isFocused={isFocused}
-              placeholder="Infome seu CPF"
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-            />
-          </Input>
-        </KeyboardAvoidingView>
+        <Input
+          isFocused={isFocused}
+          label="Informe seu CPF"
+          placeholder="Informe seu CPF"
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+        />
 
         <BoxButton>
           <Button>
