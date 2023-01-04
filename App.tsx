@@ -1,11 +1,15 @@
+import { ThemeProvider } from 'styled-components';
+import { StyleSheet, View } from 'react-native';
 import { Login } from '@presentation/screens/login';
-import { StyleSheet, Text, View } from 'react-native';
+import theme from '@presentation/styles/theme';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Login />
-    </View>
+    <ThemeProvider theme={theme}>
+      <View style={styles.container}>
+        <Login />
+      </View>
+    </ThemeProvider>
   );
 }
 
