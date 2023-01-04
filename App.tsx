@@ -1,12 +1,13 @@
 import { ThemeProvider } from 'styled-components';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { Login } from '@presentation/screens/Login';
 import theme from '@presentation/styles/theme';
 import {
   useFonts,
   Roboto_400Regular,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
+
+import { Routes } from '@main/routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -21,9 +22,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={styles.container}>
-        <Login />
-      </View>
+      <Routes />
     </ThemeProvider>
   );
 }
