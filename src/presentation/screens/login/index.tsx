@@ -6,15 +6,14 @@ import logo from '@presentation/assets/images/logorocha.png';
 import {
   BoxButton,
   BoxGirl,
-  Button,
   Container,
   Form,
   Girl,
-  TextButton,
   BoxLogo,
   Logo,
 } from './styles';
 import { Input } from '@presentation/components/Input';
+import { Button } from '@presentation/components/Button';
 
 export function Login() {
   const [isFocused, setIsFocused] = useState(false);
@@ -43,9 +42,7 @@ export function Login() {
         />
 
         <BoxButton>
-          <Button>
-            <TextButton>LOGIN</TextButton>
-          </Button>
+          <Button title="LOGIN" />
         </BoxButton>
       </Form>
 

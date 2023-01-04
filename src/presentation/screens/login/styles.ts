@@ -31,21 +31,6 @@ export const BoxButton = styled.View`
   margin-top: 15px;
 `;
 
-export const Button = styled.TouchableOpacity`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background_primary};
-
-  height: 55px;
-  border-radius: 10px;
-`;
-
-export const TextButton = styled.Text`
-  font-size: ${RFValue(16)}px;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
 export const BoxLogo = styled.View`
   align-items: center;
   justify-content: center;
