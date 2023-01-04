@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Button, Input } from '@presentation/components';
 import girl from '@presentation/assets/images/girl.png';
 import logo from '@presentation/assets/images/logorocha.png';
 
@@ -12,8 +13,6 @@ import {
   BoxLogo,
   Logo,
 } from './styles';
-import { Input } from '@presentation/components/Input';
-import { Button } from '@presentation/components/Button';
 
 export function Login() {
   const [isFocused, setIsFocused] = useState(false);
