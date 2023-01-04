@@ -1,5 +1,4 @@
-import { Text } from 'react-native';
-import { Container } from './styles';
+import { Container, Text } from './styles';
 
 export function Login() {
   return (
