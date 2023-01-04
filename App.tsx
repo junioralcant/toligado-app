@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { Login } from '@presentation/screens/login';
+import { Login } from '@presentation/screens/Login';
 import theme from '@presentation/styles/theme';
 import {
   useFonts,
