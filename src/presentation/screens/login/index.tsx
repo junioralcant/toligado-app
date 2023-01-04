@@ -13,6 +13,7 @@ import {
   BoxLogo,
   Logo,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export function Login() {
   const [isFocused, setIsFocused] = useState(false);
@@ -23,6 +24,12 @@ export function Login() {
 
   function handleInputBlur() {
     setIsFocused(false);
+  }
+
+  const navigator = useNavigation();
+
+  function teste() {
+    navigator.navigate('login');
   }
 
   return (
