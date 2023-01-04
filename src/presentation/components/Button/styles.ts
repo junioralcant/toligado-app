@@ -1,11 +1,19 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 export const BoxButton = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background_primary};
+
+  ${({ disabled }) =>
+    disabled
+      ? css`
+          background-color: ${({ theme }) => theme.colors.text_label};
+        `
+      : css`
+          background-color: ${({ theme }) => theme.colors.background_primary};
+        `}
 
   height: 55px;
   border-radius: 10px;
