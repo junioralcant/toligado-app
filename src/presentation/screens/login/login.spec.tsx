@@ -12,7 +12,7 @@ function makeSut(): void {
 }
 
 describe('Login Screen', () => {
-  it('Shoul start with inital state disabled', () => {
+  it('Should start with inital state disabled', () => {
     makeSut();
     const inputCPF = screen.getByPlaceholderText('Informe seu CPF');
     const button = screen.getByTestId('LOGIN');
@@ -20,7 +20,7 @@ describe('Login Screen', () => {
     expect(button.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it('Shoul anable input if is focused', () => {
+  it('Should anable input if is focused', () => {
     makeSut();
     const inputCPF = screen.getByPlaceholderText('Informe seu CPF');
     fireEvent(inputCPF, 'focus');
