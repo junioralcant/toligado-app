@@ -1,20 +1,37 @@
-import { useState } from 'react';
-import { KeyboardAvoidingView, TextInputProps } from 'react-native';
+import { ContextForm } from '@presentation/context/form';
+import { useContext, useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+  TextInputProps,
+} from 'react-native';
 import { BoxInput, InputText, Label } from './styles';
 
 type Props = TextInputProps & {
   label: string;
+  name: string;
 };
 
-export function Input({ label, ...rest }: Props) {
+export function Input({ label, name, ...rest }: Props) {
+  const { state, setState } = useContext(ContextForm);
   const [isFocused, setIsFocused] = useState(false);
 
-  function handleInputFocus() {
+  function handleInputFocus(): void {
     setIsFocused(true);
   }
 
-  function handleInputBlur() {
+  function handleInputBlur(): void {
     setIsFocused(false);
+  }
+
+  function handleChange(
+    e: NativeSyntheticEvent<TextInputChangeEventData>
+  ): void {
+    setState({
+      ...state,
+      [name]: e.nativeEvent.text,
+    });
   }
 
   return (
@@ -24,9 +41,11 @@ export function Input({ label, ...rest }: Props) {
           <Label>{label}</Label>
           <InputText
             {...rest}
+            testID={name}
             isFocused={isFocused}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
+            onChange={handleChange}
           />
         </BoxInput>
       </KeyboardAvoidingView>
