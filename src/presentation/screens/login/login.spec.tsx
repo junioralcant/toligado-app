@@ -1,11 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
-import { ValidationSpy } from '@presentation/mocks';
+import { AuthenticationSpy, ValidationSpy } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { faker } from '@faker-js/faker';
-
-import { AuthenticationSpy } from '@presentation/mocks/mock-authentication';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
