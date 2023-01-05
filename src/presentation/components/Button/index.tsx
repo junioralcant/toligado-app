@@ -6,7 +6,7 @@ type Props = {
 
 export function Button({ title }: Props) {
   return (
-    <BoxButton disabled>
+    <BoxButton testID={title} disabled>
       <TextButton>{title}</TextButton>
     </BoxButton>
   );
