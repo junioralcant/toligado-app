@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { ValidationSpy } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
+import { faker } from '@faker-js/faker';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
@@ -10,6 +11,7 @@ type SutTypes = {
 
 function makeSut(): SutTypes {
   const validationSpy = new ValidationSpy();
+  validationSpy.errorMessage = faker.random.words();
   render(
     <ThemeProvider theme={theme}>
       <Login validation={validationSpy} />
@@ -42,5 +44,15 @@ describe('Login Screen', () => {
     expect(validationSpy.input).toEqual({
       cpf: '04404040460',
     });
+  });
+
+  it('Should return disabled button if cpf error Validation fails', () => {
+    const { validationSpy } = makeSut();
+    const errorMessage = faker.random.words();
+    validationSpy.errorMessage = errorMessage;
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    const button = screen.getByTestId('LOGIN');
+    expect(button.props.accessibilityState.disabled).toBeTruthy();
   });
 });
