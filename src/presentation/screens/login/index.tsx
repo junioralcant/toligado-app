@@ -15,12 +15,14 @@ import { ContextForm } from '@presentation/context/form';
 import { useEffect, useState } from 'react';
 import { IValidation } from '@presentation/repositories/validation';
 import { Loading } from '@presentation/components/Loading';
+import { IAuthentication } from '@domain/usecases';
 
 type Props = {
   validation: IValidation;
+  authentication: IAuthentication;
 };
 
-export function Login({ validation }: Props) {
+export function Login({ validation, authentication }: Props) {
   const [state, setState] = useState({
     cpf: '',
     errorMessage: '',
@@ -32,8 +34,9 @@ export function Login({ validation }: Props) {
     setState({ ...state, errorMessage: error });
   }, [state.cpf]);
 
-  function handleSubmit(): void {
+  async function handleSubmit(): Promise<void> {
     setState({ ...state, isLoading: true });
+    await authentication.auth({ cpf: state.cpf });
   }
 
   return (
