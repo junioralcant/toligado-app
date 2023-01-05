@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react';
 import { IValidation } from '@presentation/repositories/validation';
 import { Loading } from '@presentation/components/Loading';
 import { IAuthentication } from '@domain/usecases';
+import { Text } from 'react-native';
+import { Error } from '@presentation/components/Error';
 
 type Props = {
   validation: IValidation;
@@ -27,6 +29,7 @@ export function Login({ validation, authentication }: Props) {
     cpf: '',
     errorMessage: '',
     isLoading: false,
+    errorResponse: '',
   });
 
   useEffect(() => {
@@ -35,8 +38,12 @@ export function Login({ validation, authentication }: Props) {
   }, [state.cpf]);
 
   async function handleSubmit(): Promise<void> {
-    setState({ ...state, isLoading: true });
-    await authentication.auth({ cpf: state.cpf });
+    try {
+      setState({ ...state, isLoading: true });
+      await authentication.auth({ cpf: state.cpf });
+    } catch (error: any) {
+      setState({ ...state, errorResponse: error.message, isLoading: false });
+    }
   }
 
   return (
@@ -61,6 +68,7 @@ export function Login({ validation, authentication }: Props) {
             </BoxButton>
           )}
         </Form>
+        <Error />
       </ContextForm.Provider>
 
       <BoxLogo>
