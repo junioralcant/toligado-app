@@ -22,7 +22,11 @@ export function Login() {
       </BoxGirl>
 
       <Form>
-        <Input label="CPF" placeholder="Informe seu CPF" />
+        <Input
+          label="CPF"
+          placeholder="Informe seu CPF"
+          keyboardType="numeric"
+        />
 
         <BoxButton>
           <Button title="LOGIN" />
