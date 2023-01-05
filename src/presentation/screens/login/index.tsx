@@ -14,7 +14,6 @@ import {
 import { ContextForm } from '@presentation/context/form';
 import { useEffect, useState } from 'react';
 import { IValidation } from '@presentation/repositories/validation';
-import { Text } from 'react-native';
 
 type Props = {
   validation: IValidation;
@@ -50,8 +49,6 @@ export function Login({ validation }: Props) {
           </BoxButton>
         </Form>
       </ContextForm.Provider>
-
-      {state.errorMessage && <Text>{state.errorMessage}</Text>}
 
       <BoxLogo>
         <Logo source={logo} />
