@@ -4,21 +4,39 @@ import { ValidationSpy } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { faker } from '@faker-js/faker';
+import { IAuthentication } from '@domain/usecases';
+import { mockAccounModel } from '@domain/mocks';
+
+class AuthenticationSpy implements IAuthentication {
+  account = mockAccounModel();
+  params: IAuthentication.Params = {
+    cpf: '',
+  };
+
+  async auth(
+    params: IAuthentication.Params
+  ): Promise<IAuthentication.Model | undefined> {
+    this.params = params;
+    return this.account;
+  }
+}
 
 type SutTypes = {
   validationSpy: ValidationSpy;
+  authenticationSpy: AuthenticationSpy;
 };
 
 function makeSut(): SutTypes {
   const validationSpy = new ValidationSpy();
+  const authenticationSpy = new AuthenticationSpy();
   validationSpy.errorMessage = faker.random.words();
   render(
     <ThemeProvider theme={theme}>
-      <Login validation={validationSpy} />
+      <Login validation={validationSpy} authentication={authenticationSpy} />
     </ThemeProvider>
   );
 
-  return { validationSpy };
+  return { validationSpy, authenticationSpy };
 }
 
 describe('Login Screen', () => {
@@ -74,5 +92,18 @@ describe('Login Screen', () => {
     fireEvent.press(button);
     const loading = screen.getByTestId('loading');
     expect(loading).toBeTruthy();
+  });
+
+  it('Should call Authentication with correct value', () => {
+    const { validationSpy, authenticationSpy } = makeSut();
+    const cpf = '04404040460';
+    validationSpy.errorMessage = '';
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    const button = screen.getByTestId('LOGIN');
+    fireEvent.press(button);
+    expect(authenticationSpy.params).toEqual({
+      cpf,
+    });
   });
 });
