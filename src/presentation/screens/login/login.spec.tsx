@@ -1,20 +1,37 @@
+import { IValidation } from '@presentation/repositories/validation';
 import theme from '@presentation/styles/theme';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { Login } from '.';
 
-function makeSut(): void {
+type SutTypes = {
+  validationSpy: ValidationSpy;
+};
+
+class ValidationSpy implements IValidation {
+  errorMessage = '';
+  input = {};
+  validate(input: object): string {
+    this.input = input;
+    return this.errorMessage;
+  }
+}
+
+function makeSut(): SutTypes {
+  const validationSpy = new ValidationSpy();
   render(
     <ThemeProvider theme={theme}>
-      <Login />
+      <Login validation={validationSpy} />
     </ThemeProvider>
   );
+
+  return { validationSpy };
 }
 
 describe('Login Screen', () => {
   it('Should start with inital state disabled', () => {
     makeSut();
-    const inputCPF = screen.getByPlaceholderText('Informe seu CPF');
+    const inputCPF = screen.getByTestId('cpf');
     const button = screen.getByTestId('LOGIN');
     expect(inputCPF.props.isFocused).toBeFalsy();
     expect(button.props.accessibilityState.disabled).toBeTruthy();
@@ -22,8 +39,17 @@ describe('Login Screen', () => {
 
   it('Should anable input if is focused', () => {
     makeSut();
-    const inputCPF = screen.getByPlaceholderText('Informe seu CPF');
+    const inputCPF = screen.getByTestId('cpf');
     fireEvent(inputCPF, 'focus');
     expect(inputCPF.props.isFocused).toBeTruthy();
+  });
+
+  it('Should call Validation with correct value', () => {
+    const { validationSpy } = makeSut();
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    expect(validationSpy.input).toEqual({
+      cpf: '04404040460',
+    });
   });
 });
