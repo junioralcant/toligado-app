@@ -4,22 +4,8 @@ import { ValidationSpy } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { faker } from '@faker-js/faker';
-import { IAuthentication } from '@domain/usecases';
-import { mockAccounModel } from '@domain/mocks';
 
-class AuthenticationSpy implements IAuthentication {
-  account = mockAccounModel();
-  params: IAuthentication.Params = {
-    cpf: '',
-  };
-
-  async auth(
-    params: IAuthentication.Params
-  ): Promise<IAuthentication.Model | undefined> {
-    this.params = params;
-    return this.account;
-  }
-}
+import { AuthenticationSpy } from '@presentation/mocks/mock-authentication';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
