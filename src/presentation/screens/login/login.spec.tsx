@@ -55,4 +55,13 @@ describe('Login Screen', () => {
     const button = screen.getByTestId('LOGIN');
     expect(button.props.accessibilityState.disabled).toBeTruthy();
   });
+
+  it('Should anabled button if cpf Validation succeeds', () => {
+    const { validationSpy } = makeSut();
+    validationSpy.errorMessage = '';
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    const button = screen.getByTestId('LOGIN');
+    expect(button.props.accessibilityState.disabled).toBeFalsy();
+  });
 });
