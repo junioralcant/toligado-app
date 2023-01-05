@@ -25,12 +25,10 @@ export function Input({ label, name, ...rest }: Props) {
     setIsFocused(false);
   }
 
-  function handleChange(
-    e: NativeSyntheticEvent<TextInputChangeEventData>
-  ): void {
+  function handleChange(e: any): void {
     setState({
       ...state,
-      [name]: e.nativeEvent.text,
+      [name]: e,
     });
   }
 
@@ -45,7 +43,7 @@ export function Input({ label, name, ...rest }: Props) {
             isFocused={isFocused}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-            onChange={handleChange}
+            onChangeText={handleChange}
           />
         </BoxInput>
       </KeyboardAvoidingView>

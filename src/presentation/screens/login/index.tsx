@@ -12,12 +12,21 @@ import {
   Logo,
 } from './styles';
 import { ContextForm } from '@presentation/context/form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IValidation } from '@presentation/repositories/validation';
 
-export function Login() {
+type Props = {
+  validation: IValidation;
+};
+
+export function Login({ validation }: Props) {
   const [state, setState] = useState({
     cpf: '',
   });
+
+  useEffect(() => {
+    validation.validate({ cpf: state.cpf });
+  }, [state.cpf]);
 
   return (
     <Container>
