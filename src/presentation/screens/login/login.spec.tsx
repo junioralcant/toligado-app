@@ -1,5 +1,5 @@
 import theme from '@presentation/styles/theme';
-import { render, screen } from '@testing-library/react-native';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { Login } from '.';
 
@@ -18,5 +18,12 @@ describe('Login Screen', () => {
     const button = screen.getByTestId('LOGIN');
     expect(inputCPF.props.isFocused).toBeFalsy();
     expect(button.props.accessibilityState.disabled).toBeTruthy();
+  });
+
+  it('Shoul anable input if is focused', () => {
+    makeSut();
+    const inputCPF = screen.getByPlaceholderText('Informe seu CPF');
+    fireEvent(inputCPF, 'focus');
+    expect(inputCPF.props.isFocused).toBeTruthy();
   });
 });
