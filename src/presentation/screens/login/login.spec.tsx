@@ -1,9 +1,15 @@
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { AuthenticationSpy, ValidationSpy } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { faker } from '@faker-js/faker';
+import { InvalidCredentialsError } from '@domain/errors';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
@@ -88,6 +94,23 @@ describe('Login Screen', () => {
     fireEvent.press(button);
     expect(authenticationSpy.params).toEqual({
       cpf,
+    });
+  });
+
+  it('Should present error if Authentication fails', async () => {
+    const { validationSpy, authenticationSpy } = makeSut();
+    validationSpy.errorMessage = '';
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockResolvedValueOnce(Promise.reject(new InvalidCredentialsError()));
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    const button = screen.getByTestId('LOGIN');
+    fireEvent.press(button);
+
+    await waitFor(() => {
+      const errorComponent = screen.getByTestId('error');
+      expect(errorComponent).toBeTruthy();
     });
   });
 });
