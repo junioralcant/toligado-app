@@ -14,6 +14,7 @@ import {
 import { ContextForm } from '@presentation/context/form';
 import { useEffect, useState } from 'react';
 import { IValidation } from '@presentation/repositories/validation';
+import { Loading } from '@presentation/components/Loading';
 
 type Props = {
   validation: IValidation;
@@ -23,12 +24,17 @@ export function Login({ validation }: Props) {
   const [state, setState] = useState({
     cpf: '',
     errorMessage: '',
+    isLoading: false,
   });
 
   useEffect(() => {
     const error = validation.validate({ cpf: state.cpf });
     setState({ ...state, errorMessage: error });
   }, [state.cpf]);
+
+  function handleSubmit(): void {
+    setState({ ...state, isLoading: true });
+  }
 
   return (
     <Container>
@@ -44,9 +50,13 @@ export function Login({ validation }: Props) {
             name="cpf"
           />
 
-          <BoxButton>
-            <Button title="LOGIN" />
-          </BoxButton>
+          {state.isLoading ? (
+            <Loading />
+          ) : (
+            <BoxButton>
+              <Button title="LOGIN" onPress={handleSubmit} />
+            </BoxButton>
+          )}
         </Form>
       </ContextForm.Provider>
 

@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import { BoxButton, TextButton } from './styles';
 import { ContextForm } from '@presentation/context/form';
+import { ButtonProps } from 'react-native';
 
-type Props = {
+type Props = ButtonProps & {
   title: string;
 };
 
