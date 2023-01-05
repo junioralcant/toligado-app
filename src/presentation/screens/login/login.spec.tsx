@@ -1,21 +1,12 @@
-import { IValidation } from '@presentation/repositories/validation';
-import theme from '@presentation/styles/theme';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
+import { ValidationSpy } from '@presentation/mocks';
+import theme from '@presentation/styles/theme';
 import { Login } from '.';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
 };
-
-class ValidationSpy implements IValidation {
-  errorMessage = '';
-  input = {};
-  validate(input: object): string {
-    this.input = input;
-    return this.errorMessage;
-  }
-}
 
 function makeSut(): SutTypes {
   const validationSpy = new ValidationSpy();
