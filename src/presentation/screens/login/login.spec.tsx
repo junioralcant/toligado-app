@@ -119,7 +119,7 @@ describe('Login Screen', () => {
     });
   });
 
-  it('Should add accessToken to localstorage if Authentication on success', async () => {
+  it('Should add accessToken and User to AsyncStorage if Authentication on success', async () => {
     const { validationSpy, authenticationSpy } = makeSut();
     validationSpy.errorMessage = '';
     const inputCPF = screen.getByTestId('cpf');
