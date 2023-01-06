@@ -19,6 +19,7 @@ import { IAuthentication } from '@domain/usecases';
 import { Text } from 'react-native';
 import { Error } from '@presentation/components/Error';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   validation: IValidation;
@@ -26,6 +27,8 @@ type Props = {
 };
 
 export function Login({ validation, authentication }: Props) {
+  const navigator = useNavigation();
+
   const [state, setState] = useState({
     cpf: '',
     errorMessage: '',
@@ -43,6 +46,7 @@ export function Login({ validation, authentication }: Props) {
       setState({ ...state, isLoading: true });
       const response = await authentication.auth({ cpf: state.cpf });
       AsyncStorage.setItem('accessToken', JSON.stringify(response));
+      navigator.navigate('home');
     } catch (error: any) {
       setState({ ...state, errorResponse: error.message, isLoading: false });
     }
