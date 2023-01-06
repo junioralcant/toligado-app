@@ -6,6 +6,6 @@ export class CpfValidation implements IFieldValidation {
 
   validate(value: string): Error | null {
     const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
-    return cpfRegex.test(value) ? null : new InvalidCpfError();
+    return cpfRegex.test(value) || !value ? null : new InvalidCpfError();
   }
 }
