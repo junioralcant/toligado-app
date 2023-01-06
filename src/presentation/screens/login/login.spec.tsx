@@ -4,11 +4,12 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { faker } from '@faker-js/faker';
 import { ThemeProvider } from 'styled-components/native';
 import { AuthenticationSpy, ValidationSpy } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
-import { faker } from '@faker-js/faker';
 import { InvalidCredentialsError } from '@domain/errors';
 
 type SutTypes = {
@@ -28,6 +29,10 @@ function makeSut(): SutTypes {
 
   return { validationSpy, authenticationSpy };
 }
+
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
 
 describe('Login Screen', () => {
   it('Should start with inital state disabled', () => {
@@ -111,6 +116,22 @@ describe('Login Screen', () => {
     await waitFor(() => {
       const errorComponent = screen.getByTestId('error');
       expect(errorComponent).toBeTruthy();
+    });
+  });
+
+  it('Should add accessToken to localstorage if Authentication on success', async () => {
+    const { validationSpy, authenticationSpy } = makeSut();
+    validationSpy.errorMessage = '';
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    const button = screen.getByTestId('LOGIN');
+    fireEvent.press(button);
+
+    await waitFor(() => {
+      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+        'accessToken',
+        JSON.stringify(authenticationSpy.account)
+      );
     });
   });
 });
