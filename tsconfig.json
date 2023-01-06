@@ -9,7 +9,8 @@
       "@data/*": ["src/data/*"],
       "@domain/*": ["src/domain/*"],
       "@presentation/*": ["src/presentation/*"],
-      "@main/*": ["src/main/*"]
+      "@main/*": ["src/main/*"],
+      "@validation/*": ["src/validation/*"]
     }
   }
 }

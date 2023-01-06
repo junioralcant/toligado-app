@@ -11,6 +11,7 @@ module.exports = function (api) {
             '@domain': './src/domain',
             '@presentation': './src/presentation',
             '@main': './src/main',
+            '@validation': './src/validation',
           },
         },
       ],
