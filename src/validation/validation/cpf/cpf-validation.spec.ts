@@ -8,7 +8,7 @@ function makeSut(field: string): CpfValidation {
 describe('CpfValidation', () => {
   it('Should return error if CPF is invalid', () => {
     const sut = makeSut('cpf');
-    const error = sut.validate('04403030360');
+    const error = sut.validate('15786148050');
     expect(error).toEqual(new InvalidCpfError());
   });
 
