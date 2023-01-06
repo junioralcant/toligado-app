@@ -4,7 +4,7 @@ import { IFieldValidation } from '@validation/repositories/field-validation';
 export class RequiredFieldValidation implements IFieldValidation {
   constructor(readonly field: string) {}
 
-  validate(value: string): Error {
-    return new RequiredFieldError();
+  validate(value: string): Error | null {
+    return value ? null : new RequiredFieldError();
   }
 }
