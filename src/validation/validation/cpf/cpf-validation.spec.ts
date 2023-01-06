@@ -17,4 +17,10 @@ describe('CpfValidation', () => {
     const error = sut.validate('157.861.480-50');
     expect(error).toBeFalsy();
   });
+
+  it('Should not return error if CPF is empty', () => {
+    const sut = makeSut('cpf');
+    const error = sut.validate('');
+    expect(error).toBeFalsy();
+  });
 });
