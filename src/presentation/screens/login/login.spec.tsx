@@ -3,11 +3,9 @@ import {
   screen,
   fireEvent,
   waitFor,
-  act,
 } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { faker } from '@faker-js/faker';
-// import 'react-native-gesture-handler/jestSetup';
 
 import { ThemeProvider } from 'styled-components/native';
 import { AuthenticationSpy, ValidationSpy } from '@presentation/mocks';
