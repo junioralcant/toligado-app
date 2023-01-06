@@ -3,7 +3,9 @@ import { IFieldValidation } from '@validation/repositories/field-validation';
 
 export class CpfValidation implements IFieldValidation {
   constructor(readonly field: string) {}
+
   validate(value: string): Error | null {
-    return new InvalidCpfError();
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+    return cpfRegex.test(value) ? null : new InvalidCpfError();
   }
 }
