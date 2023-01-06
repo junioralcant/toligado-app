@@ -18,6 +18,7 @@ import { Loading } from '@presentation/components/Loading';
 import { IAuthentication } from '@domain/usecases';
 import { Text } from 'react-native';
 import { Error } from '@presentation/components/Error';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
   validation: IValidation;
@@ -40,7 +41,8 @@ export function Login({ validation, authentication }: Props) {
   async function handleSubmit(): Promise<void> {
     try {
       setState({ ...state, isLoading: true });
-      await authentication.auth({ cpf: state.cpf });
+      const response = await authentication.auth({ cpf: state.cpf });
+      AsyncStorage.setItem('accessToken', JSON.stringify(response));
     } catch (error: any) {
       setState({ ...state, errorResponse: error.message, isLoading: false });
     }
