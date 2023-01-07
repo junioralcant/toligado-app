@@ -10,7 +10,6 @@ function makeSut(): SutTypes {
   const fieldValidationSpy2 = new FieldValidationSpy('any_field');
 
   const fieldValidationsSpy = [fieldValidationSpy, fieldValidationSpy2];
-
   const sut = new ValidationComposite(fieldValidationsSpy);
 
   return {
@@ -26,5 +25,11 @@ describe('ValidationComposite', () => {
     fieldValidationsSpy[1].error = new Error('second_error_message');
     const error = sut.validate({ any_field: 'any_value' });
     expect(error).toBe('first_error_message');
+  });
+
+  it('Should not return error if any validation no fails', () => {
+    const { sut } = makeSut();
+    const error = sut.validate({ any_field: 'any_value' });
+    expect(error).toBeFalsy();
   });
 });
