@@ -2,7 +2,11 @@ import { IValidation } from '@presentation/repositories/validation';
 import { IFieldValidation } from '@validation/repositories/field-validation';
 
 export class ValidationComposite implements IValidation {
-  constructor(private readonly validators: IFieldValidation[]) {}
+  private constructor(private readonly validators: IFieldValidation[]) {}
+
+  static build(validations: IFieldValidation[]): ValidationComposite {
+    return new ValidationComposite(validations);
+  }
 
   validate(input: object): string {
     const returnNameObjects = Object.keys(input);
