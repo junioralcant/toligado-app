@@ -11,8 +11,11 @@ function makeSut(): SutTypes {
   const fieldValidationSpy2 = new FieldValidationSpy('any_field');
 
   const fieldValidationsSpy = [fieldValidationSpy, fieldValidationSpy2];
-  const sut = new ValidationComposite(fieldValidationsSpy);
-
+  /**
+   * this is where the ValidationBuilder would come in, but in the unit tests we didn't use it
+   * ValidationComposite.build([ValidationBuilder.field('field_nane').required().cpf().biuld()])
+   */
+  const sut = ValidationComposite.build(fieldValidationsSpy);
   return {
     sut,
     fieldValidationsSpy,
