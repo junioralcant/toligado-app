@@ -1,5 +1,6 @@
 import { FieldValidationSpy } from '@validation/mocks/mock-field-validation';
 import { ValidationComposite } from './validation-composite';
+import { faker } from '@faker-js/faker';
 
 type SutTypes = {
   sut: ValidationComposite;
@@ -21,15 +22,17 @@ function makeSut(): SutTypes {
 describe('ValidationComposite', () => {
   it('Should return error if any validation fails', () => {
     const { sut, fieldValidationsSpy } = makeSut();
-    fieldValidationsSpy[0].error = new Error('first_error_message');
-    fieldValidationsSpy[1].error = new Error('second_error_message');
-    const error = sut.validate({ any_field: 'any_value' });
-    expect(error).toBe('first_error_message');
+    const errorMessage1 = faker.random.words();
+    const errorMessage2 = faker.random.words();
+    fieldValidationsSpy[0].error = new Error(errorMessage1);
+    fieldValidationsSpy[1].error = new Error(errorMessage2);
+    const error = sut.validate({ any_field: faker.random.word() });
+    expect(error).toBe(errorMessage1);
   });
 
   it('Should not return error if any validation no fails', () => {
     const { sut } = makeSut();
-    const error = sut.validate({ any_field: 'any_value' });
+    const error = sut.validate({ any_field: faker.random.word() });
     expect(error).toBeFalsy();
   });
 });
