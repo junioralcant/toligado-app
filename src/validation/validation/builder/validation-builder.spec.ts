@@ -1,3 +1,4 @@
+import { CpfValidation } from '../cpf/cpf-validation';
 import { RequiredFieldValidation } from '../required-field/required-field-validation';
 import { ValidationBuilder } from './validation-builder';
 
@@ -6,5 +7,11 @@ describe('ValidationBuilder', () => {
     const fieldName = 'any_field';
     const validatoins = ValidationBuilder.field(fieldName).required().build();
     expect(validatoins).toEqual([new RequiredFieldValidation(fieldName)]);
+  });
+
+  it('Shoul return CpfValidation', () => {
+    const fieldName = 'any_field';
+    const validatoins = ValidationBuilder.field(fieldName).cpf().build();
+    expect(validatoins).toEqual([new CpfValidation(fieldName)]);
   });
 });
