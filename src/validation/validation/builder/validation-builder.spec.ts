@@ -14,4 +14,17 @@ describe('ValidationBuilder', () => {
     const validatoins = ValidationBuilder.field(fieldName).cpf().build();
     expect(validatoins).toEqual([new CpfValidation(fieldName)]);
   });
+
+  it('Shoul return a list of validations', () => {
+    const fieldName = 'any_field';
+    const validatoins = ValidationBuilder.field(fieldName)
+      .required()
+      .cpf()
+      .build();
+
+    expect(validatoins).toEqual([
+      new CpfValidation(fieldName),
+      new RequiredFieldValidation(fieldName),
+    ]);
+  });
 });
