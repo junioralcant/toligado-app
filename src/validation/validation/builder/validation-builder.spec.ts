@@ -1,5 +1,4 @@
-import { CpfValidation } from '../cpf/cpf-validation';
-import { RequiredFieldValidation } from '../required-field/required-field-validation';
+import { RequiredFieldValidation, CpfValidation } from '@validation/validation';
 import { ValidationBuilder } from './validation-builder';
 
 describe('ValidationBuilder', () => {

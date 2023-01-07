@@ -1,6 +1,5 @@
 import { IFieldValidation } from '@validation/repositories/field-validation';
-import { CpfValidation } from '../cpf/cpf-validation';
-import { RequiredFieldValidation } from '../required-field/required-field-validation';
+import { RequiredFieldValidation, CpfValidation } from '@validation/validation';
 
 export class ValidationBuilder {
   private constructor(
