@@ -1,4 +1,5 @@
 import { IFieldValidation } from '@validation/repositories/field-validation';
+import { CpfValidation } from '../cpf/cpf-validation';
 import { RequiredFieldValidation } from '../required-field/required-field-validation';
 
 export class ValidationBuilder {
@@ -13,7 +14,11 @@ export class ValidationBuilder {
 
   required(): ValidationBuilder {
     this.validations.push(new RequiredFieldValidation(this.fieldName));
+    return this;
+  }
 
+  cpf(): ValidationBuilder {
+    this.validations.push(new CpfValidation(this.fieldName));
     return this;
   }
 
