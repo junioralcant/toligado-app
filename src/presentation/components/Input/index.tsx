@@ -1,19 +1,16 @@
-import { ContextForm } from '@presentation/context/form';
 import { useContext, useState } from 'react';
-import {
-  KeyboardAvoidingView,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-  TextInputProps,
-} from 'react-native';
+import { KeyboardAvoidingView, TextInputProps } from 'react-native';
+import { ContextForm } from '@presentation/context/form';
+import { maskCPF, MaskInputType } from '@presentation/utils/input-masks';
 import { BoxInput, InputText, Label } from './styles';
 
 type Props = TextInputProps & {
   label: string;
   name: string;
+  maskType?: MaskInputType;
 };
 
-export function Input({ label, name, ...rest }: Props) {
+export function Input({ label, name, maskType, ...rest }: Props) {
   const { state, setState } = useContext(ContextForm);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -26,9 +23,15 @@ export function Input({ label, name, ...rest }: Props) {
   }
 
   function handleChange(e: string): void {
+    let value = e;
+
+    if (maskType === MaskInputType.cpf) {
+      value = maskCPF(e);
+    }
+
     setState({
       ...state,
-      [name]: e,
+      [name]: value,
     });
   }
 
@@ -43,6 +46,7 @@ export function Input({ label, name, ...rest }: Props) {
             isFocused={isFocused}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
+            value={state[name]}
             onChangeText={handleChange}
           />
         </BoxInput>

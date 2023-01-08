@@ -1,6 +1,16 @@
+import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { Button, Input } from '@presentation/components';
 import girl from '@presentation/assets/images/girl.png';
 import logo from '@presentation/assets/images/logorocha.png';
+import { ContextForm } from '@presentation/context/form';
+import { IValidation } from '@presentation/repositories/validation';
+import { Loading } from '@presentation/components/Loading';
+import { IAuthentication } from '@domain/usecases';
+import { Error } from '@presentation/components/Error';
+import { MaskInputType } from '@presentation/utils/input-masks';
 
 import {
   BoxButton,
@@ -12,15 +22,6 @@ import {
   Logo,
   BoxLoading,
 } from './styles';
-import { ContextForm } from '@presentation/context/form';
-import { useEffect, useState } from 'react';
-import { IValidation } from '@presentation/repositories/validation';
-import { Loading } from '@presentation/components/Loading';
-import { IAuthentication } from '@domain/usecases';
-import { Text } from 'react-native';
-import { Error } from '@presentation/components/Error';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   validation: IValidation;
@@ -39,6 +40,7 @@ export function Login({ validation, authentication }: Props) {
 
   useEffect(() => {
     const error = validation.validate({ cpf: state.cpf });
+
     setState({ ...state, errorMessage: error });
   }, [state.cpf]);
 
@@ -65,6 +67,8 @@ export function Login({ validation, authentication }: Props) {
             placeholder="Informe seu CPF"
             keyboardType="numeric"
             name="cpf"
+            maxLength={14}
+            maskType={MaskInputType.cpf}
           />
 
           {state.isLoading ? (
