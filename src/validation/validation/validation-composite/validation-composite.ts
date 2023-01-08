@@ -10,12 +10,12 @@ export class ValidationComposite implements IValidation {
 
   validate(input: object): string {
     const returnNameObjects = Object.keys(input);
+    const fieldName = returnNameObjects[0] as keyof typeof input;
 
-    const validators = this.validators.filter(
-      (v) => v.field === returnNameObjects[0]
-    );
+    const validators = this.validators.filter((v) => v.field === fieldName);
+
     for (const validator of validators) {
-      const error = validator.validate(returnNameObjects[0]);
+      const error = validator.validate(input[fieldName]);
       if (error) {
         return error.message;
       }
