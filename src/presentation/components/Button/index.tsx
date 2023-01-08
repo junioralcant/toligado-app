@@ -7,11 +7,15 @@ type Props = ButtonProps & {
   title: string;
 };
 
-export function Button({ title }: Props) {
+export function Button({ title, ...rest }: Props) {
   const { state } = useContext(ContextForm);
 
   return (
-    <BoxButton testID={title} disabled={state.errorMessage ? true : false}>
+    <BoxButton
+      {...rest}
+      testID={title}
+      disabled={state.errorMessage ? true : false}
+    >
       <TextButton>{title}</TextButton>
     </BoxButton>
   );
