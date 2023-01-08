@@ -25,7 +25,7 @@ export function Input({ label, name, ...rest }: Props) {
     setIsFocused(false);
   }
 
-  function handleChange(e: any): void {
+  function handleChange(e: string): void {
     setState({
       ...state,
       [name]: e,
