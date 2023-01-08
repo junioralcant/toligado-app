@@ -10,6 +10,7 @@ import {
   Girl,
   BoxLogo,
   Logo,
+  BoxLoading,
 } from './styles';
 import { ContextForm } from '@presentation/context/form';
 import { useEffect, useState } from 'react';
@@ -67,7 +68,9 @@ export function Login({ validation, authentication }: Props) {
           />
 
           {state.isLoading ? (
-            <Loading />
+            <BoxLoading>
+              <Loading />
+            </BoxLoading>
           ) : (
             <BoxButton>
               <Button title="LOGIN" onPress={handleSubmit} />

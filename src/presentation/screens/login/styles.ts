@@ -37,6 +37,12 @@ export const BoxLogo = styled.View`
   margin-top: 15px;
 `;
 
+export const BoxLoading = styled.View`
+  justify-content: center;
+  height: 55px;
+  margin-top: 15px;
+`;
+
 export const Logo = styled.Image.attrs({
   resizeMode: 'contain',
 })`
