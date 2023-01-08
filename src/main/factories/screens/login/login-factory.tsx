@@ -1,8 +1,8 @@
 import { RemoteAuthenticationUseCase } from '@data/usecases/authentication/remote-authentication.usecase';
 import { AxiosHttpClient } from '@infra/http/axios-http-client/axios-http-client';
+import { makeApiUrlFactory } from '@main/factories/services/api-url-factory';
 import { Login } from '@presentation/screens/Login';
 import { ValidationBuilder, ValidationComposite } from '@validation/validation';
-import { makeApiUrlFactory } from '../../services/api-url-factory';
 
 export function MakeLoginFactory() {
   const url = makeApiUrlFactory('/sessions');

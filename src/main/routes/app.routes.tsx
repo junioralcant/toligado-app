@@ -1,6 +1,6 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { MakeLoginFactory } from '../factories/screens/login/login-factory';
 import React from 'react';
+import { MakeLoginFactory } from '@main/factories/screens/login/login-factory';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
