@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components/native';
 import theme from '@presentation/styles/theme';
 
 describe('Input component', () => {
-  it('Should begin with not isFocused', () => {});
+  it('Should change status of isFocused', () => {});
   render(
     <ContextForm.Provider value={{ state: {} }}>
       <ThemeProvider theme={theme}>
