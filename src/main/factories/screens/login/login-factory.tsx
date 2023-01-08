@@ -1,8 +1,8 @@
 import { RemoteAuthenticationUseCase } from '@data/usecases/authentication/remote-authentication.usecase';
 import { AxiosHttpClient } from '@infra/http/axios-http-client/axios-http-client';
-import { makeApiUrlFactory } from '@main/factories/services/api-url-factory';
+import { makeApiUrlFactory } from '@main/factories/http/api-url-factory';
 import { Login } from '@presentation/screens/Login';
-import { ValidationBuilder, ValidationComposite } from '@validation/validation';
+import { makeLoginValidationFactory } from './login-validation-factory';
 
 export function MakeLoginFactory() {
   const url = makeApiUrlFactory('/sessions');
@@ -11,9 +11,7 @@ export function MakeLoginFactory() {
     url,
     axiosHttpClient
   );
-  const validationComposite = ValidationComposite.build([
-    ...ValidationBuilder.field('cpf').required().cpf().build(),
-  ]);
+  const validationComposite = makeLoginValidationFactory();
 
   return (
     <Login
