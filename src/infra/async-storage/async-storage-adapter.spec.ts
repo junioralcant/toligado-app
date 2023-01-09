@@ -22,4 +22,15 @@ describe('AsyncStorageAdapter', () => {
       JSON.stringify(value)
     );
   });
+
+  it('Should throw error if asyncStorage.setTem throws', async () => {
+    const sut = makeSut();
+    const key = 'any_key';
+    const value = mockAccounModel();
+
+    jest.spyOn(sut, 'set').mockRejectedValueOnce(new Error());
+    const promise = sut.set(key, value);
+
+    await expect(promise).rejects.toThrow(new Error());
+  });
 });
