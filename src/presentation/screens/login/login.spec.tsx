@@ -70,7 +70,7 @@ describe('Login Screen', () => {
     const inputCPF = screen.getByTestId('cpf');
     fireEvent(inputCPF, 'onChangeText', '04404040460');
     expect(validationSpy.input).toEqual({
-      cpf: '04404040460',
+      cpf: '044.040.404-60',
     });
   });
 
@@ -106,10 +106,10 @@ describe('Login Screen', () => {
 
   it('Should call Authentication with correct value', () => {
     const { validationSpy, authenticationSpy } = makeSut();
-    const cpf = '04404040460';
+    const cpf = '044.040.404-60';
     validationSpy.errorMessage = '';
     const inputCPF = screen.getByTestId('cpf');
-    fireEvent(inputCPF, 'onChangeText', '04404040460');
+    fireEvent(inputCPF, 'onChangeText', cpf);
     const button = screen.getByTestId('LOGIN');
     fireEvent.press(button);
     expect(authenticationSpy.params).toEqual({
