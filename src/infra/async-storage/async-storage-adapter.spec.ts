@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { mockAccounModel } from '@domain/mocks';
-import { AsyncStorageAdapter } from './asyn-storage';
+import { AsyncStorageAdapter } from './asyn-storage-adapter';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
