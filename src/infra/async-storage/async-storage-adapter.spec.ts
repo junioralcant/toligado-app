@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { mockAccounModel } from '@domain/mocks';
 import { AsyncStorageAdapter } from './asyn-storage-adapter';
@@ -13,7 +14,7 @@ function makeSut(): AsyncStorageAdapter {
 describe('AsyncStorageAdapter', () => {
   it('Should call asyncStorage.setTem with correct values', () => {
     const sut = makeSut();
-    const key = 'any_key';
+    const key = faker.random.word();
     const value = mockAccounModel();
 
     sut.set(key, value);
@@ -25,7 +26,7 @@ describe('AsyncStorageAdapter', () => {
 
   it('Should throw error if asyncStorage.setTem throws', async () => {
     const sut = makeSut();
-    const key = 'any_key';
+    const key = faker.random.word();
     const value = mockAccounModel();
 
     jest.spyOn(sut, 'set').mockRejectedValueOnce(new Error());
