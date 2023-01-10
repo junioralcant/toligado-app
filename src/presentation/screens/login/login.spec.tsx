@@ -155,7 +155,7 @@ describe('Login Screen', () => {
     });
   });
 
-  it.only('Should present error if AsyncStorageAdapter fails', async () => {
+  it('Should present error if AsyncStorageAdapter fails', async () => {
     const { validationSpy, asyncStorageAdapterMock } = makeSut();
 
     validationSpy.errorMessage = '';
