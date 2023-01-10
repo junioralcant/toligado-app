@@ -4,11 +4,14 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { faker } from '@faker-js/faker';
 
 import { ThemeProvider } from 'styled-components/native';
-import { AuthenticationSpy, ValidationSpy } from '@presentation/mocks';
+import {
+  AsyncStorageAdapterMock,
+  AuthenticationSpy,
+  ValidationSpy,
+} from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { InvalidCredentialsError } from '@domain/errors';
@@ -17,27 +20,30 @@ import { useNavigation } from '@react-navigation/native';
 type SutTypes = {
   validationSpy: ValidationSpy;
   authenticationSpy: AuthenticationSpy;
+  asyncStorageAdapterMock: AsyncStorageAdapterMock;
 };
 
 function makeSut(): SutTypes {
   const validationSpy = new ValidationSpy();
   const authenticationSpy = new AuthenticationSpy();
+  const asyncStorageAdapterMock = new AsyncStorageAdapterMock();
+
   validationSpy.errorMessage = faker.random.words();
   render(
     <ThemeProvider theme={theme}>
-      <Login validation={validationSpy} authentication={authenticationSpy} />
+      <Login
+        validation={validationSpy}
+        authentication={authenticationSpy}
+        asyncStorage={asyncStorageAdapterMock}
+      />
     </ThemeProvider>
   );
 
-  return { validationSpy, authenticationSpy };
+  return { validationSpy, authenticationSpy, asyncStorageAdapterMock };
 }
 
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
-
-jest.mock('@react-native-async-storage/async-storage', () =>
-  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
-);
 
 jest.mock('@react-navigation/native', () => {
   const mockedNavigate = jest.fn();
@@ -134,8 +140,9 @@ describe('Login Screen', () => {
     });
   });
 
-  it('Should add accessToken and User to AsyncStorage if Authentication on success', async () => {
-    const { validationSpy, authenticationSpy } = makeSut();
+  it('Should add accessAccount and User to AsyncStorageAdapter if Authentication on success', async () => {
+    const { validationSpy, authenticationSpy, asyncStorageAdapterMock } =
+      makeSut();
     validationSpy.errorMessage = '';
     const inputCPF = screen.getByTestId('cpf');
     fireEvent(inputCPF, 'onChangeText', '04404040460');
@@ -143,10 +150,8 @@ describe('Login Screen', () => {
     fireEvent.press(button);
 
     await waitFor(() => {
-      expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-        'accessToken',
-        JSON.stringify(authenticationSpy.account)
-      );
+      expect(asyncStorageAdapterMock.value).toEqual(authenticationSpy.account);
+      expect(asyncStorageAdapterMock.key).toBe('accessAccount');
     });
   });
 
