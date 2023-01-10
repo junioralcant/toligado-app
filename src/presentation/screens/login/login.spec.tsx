@@ -14,7 +14,7 @@ import {
 } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
-import { InvalidCredentialsError } from '@domain/errors';
+import { InvalidCredentialsError, UnexpectedError } from '@domain/errors';
 import { useNavigation } from '@react-navigation/native';
 
 type SutTypes = {
@@ -152,6 +152,24 @@ describe('Login Screen', () => {
     await waitFor(() => {
       expect(asyncStorageAdapterMock.value).toEqual(authenticationSpy.account);
       expect(asyncStorageAdapterMock.key).toBe('accessAccount');
+    });
+  });
+
+  it.only('Should present error if AsyncStorageAdapter fails', async () => {
+    const { validationSpy, asyncStorageAdapterMock } = makeSut();
+
+    validationSpy.errorMessage = '';
+    jest
+      .spyOn(asyncStorageAdapterMock, 'set')
+      .mockResolvedValueOnce(Promise.reject(new UnexpectedError()));
+    const inputCPF = screen.getByTestId('cpf');
+    fireEvent(inputCPF, 'onChangeText', '044.040.404-60');
+    const button = screen.getByTestId('LOGIN');
+    fireEvent.press(button);
+
+    await waitFor(() => {
+      const errorComponent = screen.getByTestId('error');
+      expect(errorComponent).toBeTruthy();
     });
   });
 
