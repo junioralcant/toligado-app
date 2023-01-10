@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Button, Input } from '@presentation/components';
 import girl from '@presentation/assets/images/girl.png';
@@ -11,6 +10,7 @@ import { Loading } from '@presentation/components/Loading';
 import { IAuthentication } from '@domain/usecases';
 import { Error } from '@presentation/components/Error';
 import { MaskInputType } from '@presentation/utils/input-masks';
+import { AsyncStorageAdapter } from '@infra/async-storage/asyn-storage-adapter';
 
 import {
   BoxButton,
@@ -26,9 +26,10 @@ import {
 type Props = {
   validation: IValidation;
   authentication: IAuthentication;
+  asyncStorage: AsyncStorageAdapter;
 };
 
-export function Login({ validation, authentication }: Props) {
+export function Login({ validation, authentication, asyncStorage }: Props) {
   const navigator = useNavigation();
 
   const [state, setState] = useState({
@@ -48,7 +49,7 @@ export function Login({ validation, authentication }: Props) {
     try {
       setState({ ...state, isLoading: true });
       const response = await authentication.auth({ cpf: state.cpf });
-      AsyncStorage.setItem('accessToken', JSON.stringify(response));
+      await asyncStorage.set('accessAccount', response as object);
       navigator.navigate('home');
     } catch (error: any) {
       setState({ ...state, errorResponse: error.message, isLoading: false });
