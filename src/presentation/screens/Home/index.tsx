@@ -1,5 +1,12 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 export function Home() {
-  return <Text>Home</Text>;
+  return (
+    <View>
+      <Text>REGISTAR PERIGO</Text>
+      <Text>PERIGO REGISTRADO</Text>
+      <Text>SOBRE O APP</Text>
+      <Text>Nº DA SORTE</Text>
+    </View>
+  );
 }
