@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { Button, Input } from '@presentation/components';
@@ -12,6 +12,7 @@ import { Error } from '@presentation/components/Error';
 import { MaskInputType } from '@presentation/utils/input-masks';
 import { AsyncStorageAdapter } from '@infra/async-storage/asyn-storage-adapter';
 
+import { ApiContext } from '../../context/api/api-context';
 import {
   BoxButton,
   BoxGirl,
@@ -26,10 +27,10 @@ import {
 type Props = {
   validation: IValidation;
   authentication: IAuthentication;
-  asyncStorage: AsyncStorageAdapter;
 };
 
-export function Login({ validation, authentication, asyncStorage }: Props) {
+export function Login({ validation, authentication }: Props) {
+  const { setCurrentAccount } = useContext(ApiContext);
   const navigator = useNavigation();
 
   const [state, setState] = useState({
@@ -49,7 +50,7 @@ export function Login({ validation, authentication, asyncStorage }: Props) {
     try {
       setState({ ...state, isLoading: true });
       const response = await authentication.auth({ cpf: state.cpf });
-      await asyncStorage.set('accessAccount', response as object);
+      setCurrentAccount(response);
       navigator.navigate('home');
     } catch (error: any) {
       setState({ ...state, errorResponse: error.message, isLoading: false });

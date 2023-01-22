@@ -1,5 +1,4 @@
 import { RemoteAuthenticationUseCase } from '@data/usecases/authentication/remote-authentication.usecase';
-import { AsyncStorageAdapter } from '@infra/async-storage/asyn-storage-adapter';
 import { AxiosHttpClient } from '@infra/http/axios-http-client/axios-http-client';
 import { makeApiUrlFactory } from '@main/factories/services/api-url-factory';
 import { Login } from '@presentation/screens/Login';
@@ -13,13 +12,11 @@ export function MakeLoginFactory() {
     axiosHttpClient
   );
   const validationComposite = makeLoginValidationFactory();
-  const asyncStorage = new AsyncStorageAdapter();
 
   return (
     <Login
       authentication={remoteAuthentication}
       validation={validationComposite}
-      asyncStorage={asyncStorage}
     />
   );
 }
