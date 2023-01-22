@@ -14,32 +14,39 @@ import {
 } from '@presentation/mocks';
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
-import { InvalidCredentialsError, UnexpectedError } from '@domain/errors';
+import { InvalidCredentialsError } from '@domain/errors';
 import { useNavigation } from '@react-navigation/native';
+import { ApiContext } from '@presentation/context/api/api-context';
+import { IAuthentication } from '@domain/usecases';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
   authenticationSpy: AuthenticationSpy;
   asyncStorageAdapterMock: AsyncStorageAdapterMock;
+  setCurrentAccountMock(account: IAuthentication.Model): void;
 };
 
 function makeSut(): SutTypes {
   const validationSpy = new ValidationSpy();
   const authenticationSpy = new AuthenticationSpy();
   const asyncStorageAdapterMock = new AsyncStorageAdapterMock();
-
+  const setCurrentAccountMock = jest.fn();
   validationSpy.errorMessage = faker.random.words();
+
   render(
-    <ThemeProvider theme={theme}>
-      <Login
-        validation={validationSpy}
-        authentication={authenticationSpy}
-        asyncStorage={asyncStorageAdapterMock}
-      />
-    </ThemeProvider>
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+      <ThemeProvider theme={theme}>
+        <Login validation={validationSpy} authentication={authenticationSpy} />
+      </ThemeProvider>
+    </ApiContext.Provider>
   );
 
-  return { validationSpy, authenticationSpy, asyncStorageAdapterMock };
+  return {
+    validationSpy,
+    authenticationSpy,
+    asyncStorageAdapterMock,
+    setCurrentAccountMock,
+  };
 }
 
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
@@ -141,8 +148,12 @@ describe('Login Screen', () => {
   });
 
   it('Should add accessAccount and User to AsyncStorageAdapter if Authentication on success', async () => {
-    const { validationSpy, authenticationSpy, asyncStorageAdapterMock } =
-      makeSut();
+    const {
+      validationSpy,
+      authenticationSpy,
+      asyncStorageAdapterMock,
+      setCurrentAccountMock,
+    } = makeSut();
     validationSpy.errorMessage = '';
     const inputCPF = screen.getByTestId('cpf');
     fireEvent(inputCPF, 'onChangeText', '04404040460');
@@ -150,26 +161,9 @@ describe('Login Screen', () => {
     fireEvent.press(button);
 
     await waitFor(() => {
-      expect(asyncStorageAdapterMock.value).toEqual(authenticationSpy.account);
-      expect(asyncStorageAdapterMock.key).toBe('accessAccount');
-    });
-  });
-
-  it('Should present error if AsyncStorageAdapter fails', async () => {
-    const { validationSpy, asyncStorageAdapterMock } = makeSut();
-
-    validationSpy.errorMessage = '';
-    jest
-      .spyOn(asyncStorageAdapterMock, 'set')
-      .mockResolvedValueOnce(Promise.reject(new UnexpectedError()));
-    const inputCPF = screen.getByTestId('cpf');
-    fireEvent(inputCPF, 'onChangeText', '044.040.404-60');
-    const button = screen.getByTestId('LOGIN');
-    fireEvent.press(button);
-
-    await waitFor(() => {
-      const errorComponent = screen.getByTestId('error');
-      expect(errorComponent).toBeTruthy();
+      expect(setCurrentAccountMock).toHaveBeenCalledWith(
+        authenticationSpy.account
+      );
     });
   });
 
