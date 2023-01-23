@@ -12,7 +12,7 @@ function makeSut(): AsyncStorageAdapter {
 }
 
 describe('AsyncStorageAdapter', () => {
-  it('Should call asyncStorage.setTem with correct values', () => {
+  it('Should call asyncStorage.setItem with correct values', () => {
     const sut = makeSut();
     const key = faker.random.word();
     const value = mockAccounModel();
@@ -24,7 +24,7 @@ describe('AsyncStorageAdapter', () => {
     );
   });
 
-  it('Should throw error if asyncStorage.setTem throws', async () => {
+  it('Should throw error if asyncStorage.setItem throws', async () => {
     const sut = makeSut();
     const key = faker.random.word();
     const value = mockAccounModel();
@@ -33,5 +33,17 @@ describe('AsyncStorageAdapter', () => {
     const promise = sut.set(key, value);
 
     await expect(promise).rejects.toThrow(new Error());
+  });
+
+  it('Should call asyncStorage.getItem with correct values', async () => {
+    const sut = makeSut();
+    const key = faker.random.word();
+    const value = mockAccounModel();
+    const getItemSpy = jest
+      .spyOn(AsyncStorage, 'getItem')
+      .mockReturnValueOnce(Promise.resolve(JSON.stringify(value)));
+    const data = await sut.get(key);
+    expect(data).toEqual(value);
+    expect(getItemSpy).toHaveBeenCalledWith(key);
   });
 });

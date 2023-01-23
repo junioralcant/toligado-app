@@ -18,6 +18,7 @@ import { InvalidCredentialsError } from '@domain/errors';
 import { useNavigation } from '@react-navigation/native';
 import { ApiContext } from '@presentation/context/api/api-context';
 import { IAuthentication } from '@domain/usecases';
+import { mockAccounModel } from '@domain/mocks';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
@@ -34,7 +35,12 @@ function makeSut(): SutTypes {
   validationSpy.errorMessage = faker.random.words();
 
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: () => mockAccounModel(),
+      }}
+    >
       <ThemeProvider theme={theme}>
         <Login validation={validationSpy} authentication={authenticationSpy} />
       </ThemeProvider>
