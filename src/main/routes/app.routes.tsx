@@ -3,7 +3,7 @@ import { MakeLoginFactory } from '@main/factories/screens/login/login-factory';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '@presentation/screens/Home';
 import { ApiContext } from '@presentation/context/api/api-context';
-import { setCurrentAccountAdapter } from '@main/adapters/current-account-adapter';
+import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '@main/adapters/current-account-adapter';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -12,6 +12,7 @@ export function AppRoutes() {
     <ApiContext.Provider
       value={{
         setCurrentAccount: setCurrentAccountAdapter,
+        getCurrentAccount: getCurrentAccountAdapter
       }}
     >
       <Navigator screenOptions={{ headerShown: false }}>

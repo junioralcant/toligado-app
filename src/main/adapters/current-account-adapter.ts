@@ -4,3 +4,7 @@ import { makeAsyncStorageAdapterFactory } from '@main/factories/async-storage/as
 export function setCurrentAccountAdapter(account: IAuthentication.Model) {
   makeAsyncStorageAdapterFactory().set('account', account);
 }
+
+export function getCurrentAccountAdapter(): Promise<IAuthentication.Model> {
+  return makeAsyncStorageAdapterFactory().get('account');
+}
