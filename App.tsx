@@ -8,6 +8,11 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import { Routes } from '@main/routes';
+import {
+  getCurrentAccountAdapter,
+  setCurrentAccountAdapter,
+} from '@main/adapters/current-account-adapter';
+import { ApiContext } from '@presentation/context/api/api-context';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -22,7 +27,14 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
+      <ApiContext.Provider
+        value={{
+          setCurrentAccount: setCurrentAccountAdapter,
+          getCurrentAccount: getCurrentAccountAdapter,
+        }}
+      >
+        <Routes />
+      </ApiContext.Provider>
     </ThemeProvider>
   );
 }
