@@ -3,13 +3,17 @@ import theme from '@presentation/styles/theme';
 import { Home } from '.';
 import { ThemeProvider } from 'styled-components/native';
 
+function makeSut(): void {
+  render(
+    <ThemeProvider theme={theme}>
+      <Home />
+    </ThemeProvider>
+  );
+}
+
 describe('Home component', () => {
   it('Should show correct components', () => {
-    render(
-      <ThemeProvider theme={theme}>
-        <Home />
-      </ThemeProvider>
-    );
+    makeSut();
     expect(screen.getByText('REGISTAR PERIGO')).toBeTruthy();
     expect(screen.getByText('PERIGO REGISTRADO')).toBeTruthy();
     expect(screen.getByText('SOBRE O APP')).toBeTruthy();
