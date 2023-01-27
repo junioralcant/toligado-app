@@ -46,4 +46,11 @@ describe('AsyncStorageAdapter', () => {
     expect(data).toEqual(value);
     expect(getItemSpy).toHaveBeenCalledWith(key);
   });
+
+  it('Should call asyncStorage.removeItem if value is undefined', async () => {
+    const sut = makeSut();
+    const key = faker.random.word();
+    sut.set(key, undefined);
+    expect(AsyncStorage.removeItem).toHaveBeenCalledWith(key);
+  });
 });
