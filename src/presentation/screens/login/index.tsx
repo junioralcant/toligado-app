@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { Button, Input } from '@presentation/components';
@@ -10,9 +10,7 @@ import { Loading } from '@presentation/components/Loading';
 import { IAuthentication } from '@domain/usecases';
 import { Error } from '@presentation/components/Error';
 import { MaskInputType } from '@presentation/utils/input-masks';
-import { AsyncStorageAdapter } from '@infra/async-storage/asyn-storage-adapter';
 
-import { ApiContext } from '../../context/api/api-context';
 import {
   BoxButton,
   BoxGirl,
@@ -23,6 +21,7 @@ import {
   Logo,
   BoxLoading,
 } from './styles';
+import { useAccount } from '@presentation/hooks/use-token';
 
 type Props = {
   validation: IValidation;
@@ -30,7 +29,7 @@ type Props = {
 };
 
 export function Login({ validation, authentication }: Props) {
-  const { setCurrentAccount } = useContext(ApiContext);
+  const { setCurrentAccount } = useAccount();
   const navigator = useNavigation();
 
   const [state, setState] = useState({

@@ -1,12 +1,25 @@
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import theme from '@presentation/styles/theme';
-import { Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Text, TouchableOpacity } from 'react-native';
+import { useAccount } from '@presentation/hooks/use-token';
 import { BoxButtons, Button, Buttons, ButtonText, Container } from './styles';
 
 export function Home() {
+  const { setCurrentAccount } = useAccount();
+  const navigation = useNavigation();
+
+  function logout() {
+    setCurrentAccount(undefined);
+    navigation.navigate('login');
+  }
+
   return (
     <Container>
       <BoxButtons>
+        <TouchableOpacity testID="logout" onPress={logout}>
+          <Text>Sair</Text>
+        </TouchableOpacity>
         <Buttons>
           <Button>
             <Text>

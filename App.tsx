@@ -1,4 +1,3 @@
-import { ThemeProvider } from 'styled-components';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import theme from '@presentation/styles/theme';
 import {
@@ -8,11 +7,7 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import { Routes } from '@main/routes';
-import {
-  getCurrentAccountAdapter,
-  setCurrentAccountAdapter,
-} from '@main/adapters/current-account-adapter';
-import { ApiContext } from '@presentation/context/api/api-context';
+import { AppProvider } from '@presentation/hooks';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -26,16 +21,9 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <ApiContext.Provider
-        value={{
-          setCurrentAccount: setCurrentAccountAdapter,
-          getCurrentAccount: getCurrentAccountAdapter,
-        }}
-      >
-        <Routes />
-      </ApiContext.Provider>
-    </ThemeProvider>
+    <AppProvider>
+      <Routes />
+    </AppProvider>
   );
 }
 
