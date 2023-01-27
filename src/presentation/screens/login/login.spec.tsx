@@ -16,9 +16,9 @@ import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { InvalidCredentialsError } from '@domain/errors';
 import { useNavigation } from '@react-navigation/native';
-import { ApiContext } from '@presentation/context/api/api-context';
 import { IAuthentication } from '@domain/usecases';
 import { mockAccounModel } from '@domain/mocks';
+import { AccountContext } from '@presentation/context/account/account-context';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
@@ -35,16 +35,16 @@ function makeSut(): SutTypes {
   validationSpy.errorMessage = faker.random.words();
 
   render(
-    <ApiContext.Provider
+    <AccountContext.Provider
       value={{
         setCurrentAccount: setCurrentAccountMock,
-        getCurrentAccount: () => mockAccounModel(),
+        account: mockAccounModel(),
       }}
     >
       <ThemeProvider theme={theme}>
         <Login validation={validationSpy} authentication={authenticationSpy} />
       </ThemeProvider>
-    </ApiContext.Provider>
+    </AccountContext.Provider>
   );
 
   return {
@@ -67,6 +67,10 @@ jest.mock('@react-navigation/native', () => {
     }),
   };
 });
+
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
 
 describe('Login Screen', () => {
   it('Should start with inital state disabled', () => {
