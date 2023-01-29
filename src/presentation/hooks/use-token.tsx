@@ -20,7 +20,7 @@ function AccountProvider({ children }: PropsProvider) {
     }
 
     loadingAccount();
-  }, [account]);
+  }, []);
 
   function setCurrentAccount(account: IAuthentication.Model | undefined) {
     setCurrentAccountAdapter(account as IAuthentication.Model);
