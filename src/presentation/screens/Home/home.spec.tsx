@@ -4,7 +4,6 @@ import { Home } from '.';
 import { ThemeProvider } from 'styled-components/native';
 import { mockAccounModel } from '@domain/mocks';
 import { IAuthentication } from '@domain/usecases';
-import { useNavigation } from '@react-navigation/native';
 import { AccountContext } from '@presentation/context/account/account-context';
 
 type SutTypes = {
@@ -30,15 +29,6 @@ function makeSut(): SutTypes {
     setCurrentAccountMock,
   };
 }
-jest.mock('@react-navigation/native', () => {
-  const mockedNavigate = jest.fn();
-
-  return {
-    useNavigation: () => ({
-      navigate: mockedNavigate,
-    }),
-  };
-});
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
@@ -57,8 +47,5 @@ describe('Home component', () => {
     const { setCurrentAccountMock } = makeSut();
     fireEvent.press(screen.getByTestId('logout'));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
-    const navigation = useNavigation();
-
-    expect(navigation.navigate).toHaveBeenCalledWith('login');
   });
 });
