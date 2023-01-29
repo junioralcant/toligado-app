@@ -5,7 +5,6 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import { faker } from '@faker-js/faker';
-
 import { ThemeProvider } from 'styled-components/native';
 import {
   AsyncStorageAdapterMock,
@@ -15,7 +14,6 @@ import {
 import theme from '@presentation/styles/theme';
 import { Login } from '.';
 import { InvalidCredentialsError } from '@domain/errors';
-import { useNavigation } from '@react-navigation/native';
 import { IAuthentication } from '@domain/usecases';
 import { mockAccounModel } from '@domain/mocks';
 import { AccountContext } from '@presentation/context/account/account-context';
@@ -57,16 +55,6 @@ function makeSut(): SutTypes {
 
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
-
-jest.mock('@react-navigation/native', () => {
-  const mockedNavigate = jest.fn();
-
-  return {
-    useNavigation: () => ({
-      navigate: mockedNavigate,
-    }),
-  };
-});
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
@@ -184,7 +172,5 @@ describe('Login Screen', () => {
     fireEvent(inputCPF, 'onChangeText', '04404040460');
     const button = screen.getByTestId('LOGIN');
     fireEvent.press(button);
-    const navigator = useNavigation();
-    expect(navigator.navigate).toHaveBeenCalledWith('home');
   });
 });

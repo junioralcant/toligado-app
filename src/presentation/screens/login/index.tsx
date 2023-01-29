@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-
 import { Button, Input } from '@presentation/components';
 import girl from '@presentation/assets/images/girl.png';
 import logo from '@presentation/assets/images/logorocha.png';
@@ -30,7 +28,6 @@ type Props = {
 
 export function Login({ validation, authentication }: Props) {
   const { setCurrentAccount } = useAccount();
-  const navigator = useNavigation();
 
   const [state, setState] = useState({
     cpf: '',
@@ -50,7 +47,6 @@ export function Login({ validation, authentication }: Props) {
       setState({ ...state, isLoading: true });
       const response = await authentication.auth({ cpf: state.cpf });
       setCurrentAccount(response);
-      navigator.navigate('home');
     } catch (error: any) {
       setState({ ...state, errorResponse: error.message, isLoading: false });
     }
