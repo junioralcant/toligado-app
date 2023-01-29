@@ -1,9 +1,9 @@
+import { render, screen } from '@testing-library/react-native';
+import { ThemeProvider } from 'styled-components/native';
 import { mockAccounModel } from '@domain/mocks';
 import { IAuthentication } from '@domain/usecases';
 import { AccountContext } from '@presentation/context/account/account-context';
 import theme from '@presentation/styles/theme';
-import { render, screen } from '@testing-library/react-native';
-import { ThemeProvider } from 'styled-components/native';
 import { Routes } from './index';
 
 function makeSut(account: IAuthentication.Model | undefined = undefined) {
