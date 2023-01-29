@@ -2,7 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 import theme from '@presentation/styles/theme';
 import { Text, TouchableOpacity } from 'react-native';
 import { useAccount } from '@presentation/hooks/use-token';
-import { BoxButtons, Button, Buttons, ButtonText, Container } from './styles';
+import {
+  BoxButtons,
+  Button,
+  ButtonLogout,
+  Buttons,
+  ButtonText,
+  Container,
+  LogoutText,
+} from './styles';
 
 export function Home() {
   const { setCurrentAccount } = useAccount();
@@ -14,9 +22,9 @@ export function Home() {
   return (
     <Container>
       <BoxButtons>
-        <TouchableOpacity testID="logout" onPress={logout}>
-          <Text>Sair</Text>
-        </TouchableOpacity>
+        <ButtonLogout testID="logout" onPress={logout}>
+          <LogoutText>Sair</LogoutText>
+        </ButtonLogout>
         <Buttons>
           <Button>
             <Text>

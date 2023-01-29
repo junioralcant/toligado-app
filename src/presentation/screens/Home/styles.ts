@@ -10,12 +10,23 @@ export const Container = styled.View`
 `;
 
 export const BoxButtons = styled.View`
+  position: relative;
   margin-top: ${getStatusBarHeight()}px;
   background: ${({ theme }) => theme.colors.title};
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   height: 80%;
+`;
+
+export const ButtonLogout = styled.TouchableOpacity`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+`;
+
+export const LogoutText = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const Buttons = styled.View`
