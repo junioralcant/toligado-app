@@ -2,6 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import theme from '@presentation/styles/theme';
 import { Text, TouchableOpacity } from 'react-native';
 import { useAccount } from '@presentation/hooks/use-token';
+import { useNavigation } from '@react-navigation/native';
+
 import {
   BoxButtons,
   Button,
@@ -14,9 +16,14 @@ import {
 
 export function Home() {
   const { setCurrentAccount } = useAccount();
+  const navigation = useNavigation();
 
   function logout() {
     setCurrentAccount(undefined);
+  }
+
+  function handleRecordCapture() {
+    navigation.navigate('recordCapture');
   }
 
   return (
@@ -26,7 +33,7 @@ export function Home() {
           <LogoutText>Sair</LogoutText>
         </ButtonLogout>
         <Buttons>
-          <Button>
+          <Button testID="record-capture" onPress={handleRecordCapture}>
             <Text>
               <Ionicons
                 name="camera-outline"
