@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { mockAccounModel } from '@domain/mocks';
 import { IAuthentication } from '@domain/usecases';
 import { AccountContext } from '@presentation/context/account/account-context';
+import { useNavigation } from '@react-navigation/native';
 
 type SutTypes = {
   setCurrentAccountMock: (account: IAuthentication.Model) => void;
@@ -34,6 +35,16 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
 
+jest.mock('@react-navigation/native', () => {
+  const mockedNavigate = jest.fn();
+
+  return {
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+    }),
+  };
+});
+
 describe('Home component', () => {
   it('Should show correct components', () => {
     makeSut();
@@ -47,5 +58,13 @@ describe('Home component', () => {
     const { setCurrentAccountMock } = makeSut();
     fireEvent.press(screen.getByTestId('logout'));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
+  });
+
+  it('Should navigate to screen Record Capture', () => {
+    makeSut();
+
+    fireEvent.press(screen.getByTestId('record-capture'));
+    const navigation = useNavigation();
+    expect(navigation.navigate).toHaveBeenCalledWith('recordCapture');
   });
 });
