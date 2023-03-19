@@ -1,4 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
+import RNPickerSelect from 'react-native-picker-select';
 import { Button, Input } from '@presentation/components';
 import { ContextForm } from '@presentation/context/form';
 import theme from '@presentation/styles/theme';
@@ -41,6 +42,25 @@ export function RecordCapture() {
               name="description"
             />
           </BoxInput>
+
+          <RNPickerSelect
+            onValueChange={(value) => console.log(value)}
+            placeholder={{ label: 'Selecione uma categoria', value: '' }}
+            items={[
+              { label: 'Trânsito', value: 'Trânsito' },
+              { label: 'Choque ou incêndio', value: 'Choque ou incêndio' },
+              { label: 'Queda', value: 'Queda' },
+              { label: 'Corte ou fratura', value: 'Corte ou fratura' },
+              { label: 'EPI ou EPC', value: 'EPI ou EPC' },
+              {
+                label: 'Equipamento ou ferramenta',
+                value: 'Equipamento ou ferramenta',
+              },
+              { label: 'Documentação', value: 'Documentação' },
+              { label: 'Pessoas', value: 'Pessoas' },
+              { label: 'Outros', value: 'Outros' },
+            ]}
+          />
         </Form>
 
         <BoxButton>
