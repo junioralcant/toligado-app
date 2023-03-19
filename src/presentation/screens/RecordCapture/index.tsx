@@ -1,29 +1,60 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
+import { useState } from 'react';
+
 import { Button, Input } from '@presentation/components';
 import { ContextForm } from '@presentation/context/form';
 import theme from '@presentation/styles/theme';
 
 import {
   BoxButton,
+  BoxCameraOrGallery,
   BoxInput,
+  ButtonCameraOrGallery,
   Container,
   Form,
   SelectPhoto,
   SelectText,
   Title,
 } from './styles';
+import { ISelectImage } from '@data/repositories/select-image';
 
-export function RecordCapture() {
+type Props = {
+  selectImage: ISelectImage;
+};
+
+export function RecordCapture({ selectImage }: Props) {
+  const [state, setState] = useState({
+    activeCaptureImage: false,
+  });
+
+  function handleActiveCaptureImage() {
+    setState({ activeCaptureImage: !state.activeCaptureImage });
+  }
+
   return (
     <Container>
       <Title>Registrar</Title>
       <ContextForm.Provider value={{ state: {}, setState: {} }}>
         <Form>
-          <SelectPhoto>
+          <SelectPhoto onPress={handleActiveCaptureImage}>
             <SelectText>Foto</SelectText>
             <AntDesign name="camera" size={20} color={theme.colors.title} />
           </SelectPhoto>
+
+          <BoxCameraOrGallery>
+            <ButtonCameraOrGallery>
+              <AntDesign name="camera" size={28} color={theme.colors.title} />
+            </ButtonCameraOrGallery>
+
+            <ButtonCameraOrGallery>
+              <FontAwesome5
+                name="images"
+                size={25}
+                color={theme.colors.title}
+              />
+            </ButtonCameraOrGallery>
+          </BoxCameraOrGallery>
 
           <BoxInput>
             <Input

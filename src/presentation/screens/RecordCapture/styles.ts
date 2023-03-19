@@ -31,7 +31,7 @@ export const SelectPhoto = styled.TouchableOpacity`
   background: ${({ theme }) => theme.colors.text};
   padding: 10px;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const SelectText = styled.Text`
@@ -44,3 +44,11 @@ export const BoxButton = styled.View`
   bottom: 30px;
   margin-top: 10px;
 `;
+
+export const BoxCameraOrGallery = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80px;
+`;
+
+export const ButtonCameraOrGallery = styled.TouchableOpacity``;
