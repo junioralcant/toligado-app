@@ -41,4 +41,17 @@ describe('SelectImage', () => {
 
     expect(result).toEqual(value[0]);
   });
+
+  it('Should return object empty if not select camera image', async () => {
+    const { sut } = makeSut();
+    const value = mockeSelectImage();
+
+    jest.spyOn(ImagePicker, 'launchCameraAsync').mockResolvedValueOnce({
+      assets: undefined,
+    });
+
+    const result = await sut.openCamera();
+
+    expect(result).toEqual({});
+  });
 });
