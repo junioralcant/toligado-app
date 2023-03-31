@@ -27,7 +27,7 @@ describe('RemoteCreateRecordUseCase', () => {
     expect(httpPostClientSpy.url).toBe(url);
   });
 
-  it('Should throw error if HttpPostClient returns 403 ', async () => {
+  it('Should throw error if HttpPostClient not returns 200 ', async () => {
     const url = faker.internet.url();
     const { sut, httpPostClientSpy } = makeSut(url);
     httpPostClientSpy.response = {
@@ -37,5 +37,17 @@ describe('RemoteCreateRecordUseCase', () => {
     const promise = sut.create(mockCreateRecordParams());
 
     await expect(promise).rejects.toThrow(new UnexpectedError());
+  });
+
+  it('Should not throw error if HttpPostClient returns 200 ', async () => {
+    const url = faker.internet.url();
+    const { sut, httpPostClientSpy } = makeSut(url);
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+    };
+
+    const result = await sut.create(mockCreateRecordParams());
+
+    expect(result).toBe(undefined);
   });
 });
