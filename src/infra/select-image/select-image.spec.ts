@@ -14,6 +14,16 @@ function makeSut(): SutTypes {
   };
 }
 
+declare module 'expo-image-picker' {
+  export function launchCameraAsync(): Promise<{
+    assets: ImagePicker.ImagePickerAsset[] | null;
+  }>;
+
+  export function launchImageLibraryAsync(): Promise<{
+    assets: ImagePicker.ImagePickerAsset[] | null;
+  }>;
+}
+
 describe('SelectImage', () => {
   it('Should select camera image', async () => {
     const { sut } = makeSut();
@@ -32,7 +42,7 @@ describe('SelectImage', () => {
     const { sut } = makeSut();
 
     jest.spyOn(ImagePicker, 'launchCameraAsync').mockResolvedValueOnce({
-      assets: undefined,
+      assets: null,
     });
 
     const result = await sut.openCamera();
@@ -58,7 +68,7 @@ describe('SelectImage', () => {
     const value = mockeSelectImage();
 
     jest.spyOn(ImagePicker, 'launchImageLibraryAsync').mockResolvedValueOnce({
-      assets: undefined,
+      assets: null,
     });
 
     const result = await sut.openGallery();
