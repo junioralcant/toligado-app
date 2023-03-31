@@ -1,24 +1,10 @@
-import { SelectImage } from './select-image';
+import { mockeSelectImage } from '@domain/mocks';
 import * as ImagePicker from 'expo-image-picker';
+import { SelectImage } from './select-image';
 
 type SutTypes = {
   sut: SelectImage;
 };
-
-function mockeSelectImage(): ImagePicker.ImagePickerAsset[] {
-  return [
-    {
-      assetId: null,
-      base64: null,
-      duration: null,
-      exif: null,
-      height: 1280,
-      type: 'image',
-      uri: 'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540jrmarques.dev%252Ftoligado-app/ImagePicker/5fa8404d-87ec-44a7-8d86-378321c73310.jpeg',
-      width: 960,
-    },
-  ];
-}
 
 function makeSut(): SutTypes {
   const sut = new SelectImage();
