@@ -54,4 +54,17 @@ describe('SelectImage', () => {
 
     expect(result).toEqual({});
   });
+
+  it('Should select gallery image', async () => {
+    const { sut } = makeSut();
+    const value = mockeSelectImage();
+
+    jest.spyOn(ImagePicker, 'launchImageLibraryAsync').mockResolvedValueOnce({
+      assets: value,
+    });
+
+    const result = await sut.openGallery();
+
+    expect(result).toEqual(value[0]);
+  });
 });
