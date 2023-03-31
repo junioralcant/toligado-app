@@ -11,10 +11,10 @@ export class RemoteCreateRecordUseCase implements ICreateRecord {
   async create(params: ICreateRecord.Params): Promise<void> {
     const response = await this.httpPostClient.post({ url: this.url });
     switch (response.statusCode) {
-      case HttpStatusCode.forbidden:
-        throw new UnexpectedError();
+      case HttpStatusCode.ok:
+        return response.body;
       default:
-        break;
+        throw new UnexpectedError();
     }
   }
 }
