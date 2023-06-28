@@ -10,7 +10,9 @@ export class AxiosHttpClient implements IHttpPostClient {
     let axiosResponse: AxiosResponse;
 
     try {
-      axiosResponse = await axios.post(params.url, params.body);
+      axiosResponse = await axios.post(params.url, params.body, {
+        headers: params.headers,
+      });
     } catch (error: any) {
       axiosResponse = error.response;
     }

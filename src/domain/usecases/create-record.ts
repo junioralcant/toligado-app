@@ -4,8 +4,13 @@ export interface ICreateRecord {
 
 export namespace ICreateRecord {
   export type Params = {
-    location: string;
+    place: string;
     description: string;
     riskCategory: string;
+    dataImage: {
+      fileName: string;
+      uri: string;
+      type: string;
+    };
   };
 }
